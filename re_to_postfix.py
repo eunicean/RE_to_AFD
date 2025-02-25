@@ -1,5 +1,5 @@
 def prec(c):
-    precedence = {'|': 0, '^': 3, '*': 3, '+': 3, '?': 3, '/': 2, '-': 1, '¬': 1}  # '?' con misma prioridad que '*' y '+'
+    precedence = {'|': 0, '^': 3, '*': 3, '+': 3, '?': 3, '/': 2, '-': 1, '¬': 1} 
     return precedence.get(c, -1)
 
 def add_concatenation(regex):
@@ -31,9 +31,9 @@ def to_postfix(regex):
                 result.append(stack.pop())
             if stack:
                 stack.pop()
-        elif char == '?':  # Manejo especial para '?'
-            result.append('ε')  # Agregar epsilon explícito
-            result.append('|')  # Representa la opción de 0 o 1 ocurrencia
+        elif char == '?':  # Manejo especial para ?
+            result.append('ε')  # Agregar epsilon
+            result.append('|')  
         else:  # Operador
             while stack and prec(char) <= prec(stack[-1]) and stack[-1] != '(':
                 result.append(stack.pop())
@@ -57,4 +57,4 @@ for line in fixedlines:
 
 
 
-#https://www.geeksforgeeks.org/convert-infix-expression-to-postfix-expression/
+#código base y referencia de: https://www.geeksforgeeks.org/convert-infix-expression-to-postfix-expression/
