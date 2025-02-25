@@ -1,0 +1,30 @@
+def to_postfix(regex):
+    precedence = {'*': 3, '.': 2, '|': 1}  # Precedencia de operadores
+    output = []
+    stack = []
+    
+    for char in regex:
+        if char.isalnum():  # Si es un símbolo, lo agregamos directamente
+            output.append(char)
+        elif char in precedence:
+            while stack and precedence.get(stack[-1], 0) >= precedence[char]:
+                output.append(stack.pop())
+            stack.append(char)
+        elif char == '(':
+            stack.append(char)
+        elif char == ')':
+            while stack and stack[-1] != '(':
+                output.append(stack.pop())
+            stack.pop()
+    
+    while stack:
+        output.append(stack.pop())
+    
+    return ''.join(output)
+
+
+regex = "(a*|b*)c"
+print("RE: ", regex)
+
+postfix = to_postfix(regex)
+print(postfix)
