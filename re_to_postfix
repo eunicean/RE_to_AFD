@@ -1,30 +1,42 @@
-def to_postfix(regex):
-    precedence = {'*': 3, '.': 2, '|': 1}  # Precedencia de operadores
-    output = []
+def prec(c):
+    precedence = {'|': 0, '^': 3, '*': 2, '/': 2, '+': 1, '-': 1}
+    return precedence.get(c, -1)
+
+def to_postfix(regrex):
     stack = []
-    
-    for char in regex:
-        if char.isalnum():  # Si es un símbolo, lo agregamos directamente
-            output.append(char)
-        elif char in precedence:
-            while stack and precedence.get(stack[-1], 0) >= precedence[char]:
-                output.append(stack.pop())
-            stack.append(char)
+    result = []
+
+    for char in regrex:
+        if char.isalnum():  #letra o número
+            result.append( char )
         elif char == '(':
-            stack.append(char)
+            stack.append( char )
         elif char == ')':
             while stack and stack[-1] != '(':
-                output.append(stack.pop())
-            stack.pop()
-    
+                result.append(stack.pop())
+            if stack:  # Evita error si no hay '('
+                stack.pop()
+        else:  # si es un operador
+            while stack and prec( char ) <= prec(stack[-1]) and stack[-1] != '(':
+                result.append(stack.pop())
+            stack.append( char )
+
     while stack:
-        output.append(stack.pop())
-    
-    return ''.join(output)
+        if stack[-1] == '(': 
+            stack.pop()
+        else:
+            result.append(stack.pop())
 
+    return ''.join(result)
 
-regex = "(a*|b*)c"
-print("RE: ", regex)
+re = "(a*|b*)c"
+print("Regular regrex: ", re)
+print("Postfix ", to_postfix(re))
 
-postfix = to_postfix(regex)
-print(postfix)
+fixedlines = []
+for line in open("regular_expressions.txt"):
+    fixedlines.append(line.replace(" ", "").replace("\n", ""))
+
+for line in fixedlines:
+    print("-----------------------------\nRegular Expresion:", line)
+    print(to_postfix(line))
