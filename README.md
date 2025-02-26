@@ -50,11 +50,18 @@ def add_concatenation(regex):
 
 
 ### Graficando DFA
-Archivo: [createDFA.py](createDFA.py)
 
 Código reutilizado del repositorio: [Proyecto 1 - Teoria de la computación](https://github.com/DANdelion-0908/Proyecto1-Teor-a-de-la-Computaci-n)
 
 Dueño del código: *Hector Penedo*
+
+#### Archivos: 
+- [createDFA.py](createDFA.py)
+- [createNFA.py](createNFA.py)
+- [createTree.py](createTree.py)
+- [simulateDFA.py](simulateDFA.py)
+- [simulateNFA.py](simulateNFA.py)
+- [main.py](main.py)
 
 ### Referencias:
 - https://www.geeksforgeeks.org/convert-infix-expression-to-postfix-expression/
